@@ -1,0 +1,19 @@
+{
+  "name": "@bunker-42/server",
+  "description": "Bunker-42 Server",
+  "version": "0.0.1",
+  "author": "Evgenii Yakobenko <dillas90@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "dependencies": {
+    "apollo-server": "^2.2.6",
+    "graphql": "^14.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
+  }
+}

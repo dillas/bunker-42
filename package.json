@@ -1,0 +1,20 @@
+{
+  "name": "bunker-42",
+  "description": "Bunker-42 Server",
+  "version": "0.0.1",
+  "author": "Evgenii Yakobenko <dillas90@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:server": "lerna run build --scope={@bunker-42/server}",
+    "build:web": "lerna run build --scope={@bunker-42/web}"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^3.6.0"
+  }
+}
