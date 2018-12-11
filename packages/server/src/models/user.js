@@ -1,7 +1,32 @@
+/* eslint-disable no-return-await */
+import bcpypt from 'bcrypt'
+
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     username: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isEmail: true
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [7, 42]
+      }
     }
   })
 
@@ -23,9 +48,17 @@ const user = (sequelize, DataTypes) => {
     return user
   }
 
-  // User.associate = models => {
-  //   User.hasMany(models.Book, { onDelete: 'CASCADE' })
-  // }
+  User.beforeCreate(async user => {
+    user.password = await user.generatePasswordHash()
+  })
+
+  User.prototype.generatePasswordHash = async function () {
+    const saltRounds = 10
+    return await bcpypt.hash(this.password, saltRounds)
+  }
+  User.prototype.valdatinPassword = async function (password) {
+    return await bcpypt.compare(password, this.password)
+  }
 
   return User
 }
