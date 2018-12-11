@@ -7,14 +7,16 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon -r esm"
   },
   "dependencies": {
     "apollo-server": "^2.2.6",
+    "esm": "^3.0.84",
     "graphql": "^14.0.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "standard": "^12.0.1"
   }
 }
