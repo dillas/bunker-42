@@ -1,38 +1,21 @@
 import { gql } from 'apollo-server'
 
-export default gql`
-    type Book {
-        id: ID!
-        title: String!
-        author: User!
-    }
+import userSchema from './user'
+import messageSchema from './message'
+import bookSchema from './book'
 
-    type User {
-        id: ID!
-        username: String!
-        messages: [Message!]
-    }
-
-    type Message {
-        id: ID!
-        text: String!
-        user: User!
-    }
-
+const linkSchema = gql`
     type Query {
-        book(id: ID!): Book!
-        books: [Book]
-
-        me: User
-        user(id: ID!): User!
-        users: [User!]
-
-        message(id: ID!): Message!
-        messages: [Message!]!
+        _: Boolean
     }
 
     type Mutation {
-        createMessage(text: String!): Message!
-        deleteMessage(id: ID!): Boolean!
+        _: Boolean
+    }
+
+    type Subscription {
+        _: Boolean
     }
 `
+
+export default [linkSchema, userSchema, messageSchema, bookSchema]
