@@ -1,5 +1,5 @@
 import userResolvers from './user'
 import messageResolver from './message'
-import bookResolver from './book'
+// import bookResolver from './book'
 
-export default [userResolvers, messageResolver, bookResolver]
+export default [userResolvers, messageResolver]
