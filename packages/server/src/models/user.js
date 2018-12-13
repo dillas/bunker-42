@@ -56,6 +56,7 @@ const user = (sequelize, DataTypes) => {
     const saltRounds = 10
     return await bcpypt.hash(this.password, saltRounds)
   }
+
   User.prototype.validatePassword = async function (password) {
     return await bcpypt.compare(password, this.password)
   }
