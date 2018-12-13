@@ -89,4 +89,24 @@ const createUsersWithMessages = async () => {
       include: [models.Message]
     }
   )
+
+  await models.User.create(
+    {
+      username: 'dillas',
+      email: 'dillas90@gmail.com',
+      role: 'ADMIN',
+      password: 'huikt0uznaet',
+      messages: [
+        {
+          text: 'Since you already have seed data in your src/index.js file for two users, you can give one of them a role. '
+        },
+        {
+          text: 'The admin role used in this case will be checked if the user attempts a delete operation:'
+        }
+      ]
+    },
+    {
+      include: [models.Message]
+    }
+  )
 }
