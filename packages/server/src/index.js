@@ -1,9 +1,23 @@
 import 'dotenv/config'
-import { ApolloServer } from 'apollo-server'
+import jwt from 'jsonwebtoken'
+import { ApolloServer, AuthenticationError } from 'apollo-server'
 
 import schema from './schema'
 import resolvers from './resolvers'
 import models, { sequelize } from './models'
+
+const getMe = async req => {
+  const token = req.headers['x-token']
+
+  if (token) {
+    try {
+      return await jwt.verify(token, process.env.SECRET)
+    } catch (e) {
+      throw new AuthenticationError('Your session expired. Sign in again.')
+    }
+  }
+
+}
 
 const server = new ApolloServer({
   typeDefs: schema,
@@ -18,11 +32,14 @@ const server = new ApolloServer({
     }
   },
 
-  context: async () => ({
-    models,
-    me: await models.User.findByLogin('rwieruch'),
-    secret: process.env.SECRET
-  })
+  context: async ({ req }) => {
+    const me = await getMe(req)
+    return {
+      models,
+      me,
+      secret: process.env.SECRET
+    }
+  }
 })
 
 const eraseDatabaseOnSync = true
