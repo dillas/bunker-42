@@ -1,5 +1,6 @@
 /* eslint-disable no-return-await */
 import Sequelize from 'sequelize'
+import pubsub, { EVENTS } from '../subscription'
 
 import { combineResolvers } from 'graphql-resolvers'
 import { isAuthenticated, isMessageOwner } from './authorization'
@@ -47,10 +48,16 @@ export default {
     createMessage: combineResolvers(
       isAuthenticated,
       async (parent, { text }, { me, models }) => {
-        return await models.Message.create({
+        const message = models.Message.create({
           text,
           userId: me.id
         })
+
+        pubsub.publish(EVENTS.MESSAGE.CREATED, {
+          messageCreated: { message }
+        })
+
+        return message
       }
     ),
 
@@ -66,6 +73,12 @@ export default {
   Message: {
     user: async (message, args, { models }) => {
       return await models.User.findById(message.userId)
+    }
+  },
+
+  Subscription: {
+    messageCreated: {
+      subscribe: () => pubsub.asyncIterator(EVENTS.MESSAGE.CREATED)
     }
   }
 }

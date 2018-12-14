@@ -16,7 +16,6 @@ const getMe = async req => {
       throw new AuthenticationError('Your session expired. Sign in again.')
     }
   }
-
 }
 
 const server = new ApolloServer({
@@ -24,7 +23,9 @@ const server = new ApolloServer({
   resolvers,
 
   formatError: error => {
-    const message = error.message.replace('SequelizeValidationError: ', '').replace('Validation error: ', '')
+    const message = error.message
+      .replace('SequelizeValidationError: ', '')
+      .replace('Validation error: ', '')
 
     return {
       ...error,
@@ -32,12 +33,18 @@ const server = new ApolloServer({
     }
   },
 
-  context: async ({ req }) => {
-    const me = await getMe(req)
-    return {
-      models,
-      me,
-      secret: process.env.SECRET
+  context: async ({ req, connection }) => {
+    if (connection) {
+      return { models }
+    }
+
+    if (req) {
+      const me = await getMe(req)
+      return {
+        models,
+        me,
+        secret: process.env.SECRET
+      }
     }
   }
 })
