@@ -5,6 +5,8 @@ import messageSchema from './message'
 import bookSchema from './book'
 
 const linkSchema = gql`
+    scalar Date
+
     type Query {
         _: Boolean
     }

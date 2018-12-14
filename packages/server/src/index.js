@@ -46,7 +46,7 @@ const eraseDatabaseOnSync = true
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
-    createUsersWithMessages()
+    createUsersWithMessages(new Date())
   }
 
   server.listen().then(({ url }) => {
@@ -54,7 +54,7 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   })
 })
 
-const createUsersWithMessages = async () => {
+const createUsersWithMessages = async date => {
   await models.User.create(
     {
       username: 'rwieruch',
@@ -62,7 +62,8 @@ const createUsersWithMessages = async () => {
       password: 'rwieruch',
       messages: [
         {
-          text: 'Published the Road to learn React'
+          text: 'Published the Road to learn React',
+          createdAt: date.setSeconds(date.getSeconds() + 1)
         }
       ]
     },
@@ -78,10 +79,12 @@ const createUsersWithMessages = async () => {
       password: 'ddavids',
       messages: [
         {
-          text: 'Happy to release ...'
+          text: 'Happy to release ...',
+          createdAt: date.setSeconds(date.getSeconds() + 1)
         },
         {
-          text: 'Published a complete ...'
+          text: 'Published a complete ...',
+          createdAt: date.setSeconds(date.getSeconds() + 1)
         }
       ]
     },
@@ -98,10 +101,12 @@ const createUsersWithMessages = async () => {
       password: 'huikt0uznaet',
       messages: [
         {
-          text: 'Since you already have seed data in your src/index.js file for two users, you can give one of them a role. '
+          text: 'Since you already have seed data in your src/index.js file for two users, you can give one of them a role.',
+          createdAt: date.setSeconds(date.getSeconds() + 1)
         },
         {
-          text: 'The admin role used in this case will be checked if the user attempts a delete operation:'
+          text: 'The admin role used in this case will be checked if the user attempts a delete operation:',
+          createdAt: date.setSeconds(date.getSeconds() + 1)
         }
       ]
     },
