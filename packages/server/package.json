@@ -5,15 +5,14 @@
   "author": "Evgenii Yakobenko <dillas90@gmail.com>",
   "license": "MIT",
   "private": true,
-  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon -r esm"
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "mocha --require @babel/register \"src/**/*.spec.js\""
   },
   "dependencies": {
     "apollo-server": "^2.2.6",
     "bcrypt": "^3.0.2",
     "dotenv": "^6.2.0",
-    "esm": "^3.0.84",
     "graphql": "^14.0.2",
     "graphql-iso-date": "^3.6.1",
     "graphql-resolvers": "^0.2.2",
@@ -23,6 +22,13 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/register": "^7.0.0",
+    "axios": "^0.18.0",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.7",
     "standard": "^12.0.1"
   }
