@@ -4,10 +4,12 @@ import http from 'http'
 import jwt from 'jsonwebtoken'
 import express from 'express'
 import { ApolloServer, AuthenticationError } from 'apollo-server-express'
+import DataLoader from 'dataloader'
 
 import schema from './schema'
 import resolvers from './resolvers'
 import models, { sequelize } from './models'
+import loaders from './loaders'
 
 const app = express()
 
@@ -42,7 +44,12 @@ const server = new ApolloServer({
 
   context: async ({ req, connection }) => {
     if (connection) {
-      return { models }
+      return {
+        models,
+        loaders: {
+          user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
+        }
+      }
     }
 
     if (req) {
@@ -50,7 +57,10 @@ const server = new ApolloServer({
       return {
         models,
         me,
-        secret: process.env.SECRET
+        secret: process.env.SECRET,
+        loaders: {
+          user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
+        }
       }
     }
   }
@@ -62,14 +72,16 @@ const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 
 const isTest = !!process.env.TEST_DATABASE
+const isProduction = !!process.env.DATABASE_URL;
+const port = process.env.PORT || 8000
 
-sequelize.sync({ force: isTest }).then(async () => {
+sequelize.sync({ force: isTest || isProduction }).then(async () => {
   if (isTest) {
     createUsersWithMessages(new Date())
   }
 
-  httpServer.listen({ port: 8000 }, () => {
-    console.log(`🚀  Server ready at http://localhost:8000/graphql`)
+  httpServer.listen({ port }, () => {
+    console.log(`🚀  Server ready at http://localhost:${port}/graphql`)
   })
 })
 
