@@ -39,12 +39,12 @@ const user = (sequelize, DataTypes) => {
 
   User.findByLogin = async login => {
     let user = await User.findOne({
-      where: { username: { [Op.eq]: login } }
+      where: { username: login }
     })
 
     if (!user) {
       user = await User.findOne({
-        where: { email: { [Op.eq]: login } }
+        where: { email: login }
       })
     }
 
