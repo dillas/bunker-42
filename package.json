@@ -6,8 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build:server": "lerna run build --scope={@bunker-42/server}",
-    "build:web": "lerna run build --scope={@bunker-42/web}"
+    "start": "lerna run start --parallel"
   },
   "workspaces": {
     "packages": [
