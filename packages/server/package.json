@@ -5,6 +5,9 @@
   "author": "Evgenii Yakobenko <dillas90@gmail.com>",
   "license": "MIT",
   "private": true,
+  "engines": { 
+    "node": "11.2.0" 
+  },
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "test-server": "cross-env TEST_DATABASE=bunker42testdb yarn start",
@@ -13,7 +16,7 @@
   "dependencies": {
     "apollo-server": "^2.2.6",
     "apollo-server-express": "^2.3.1",
-    "bcrypt": "https://github.com/kelektiv/node.bcrypt.js.git#master",
+    "bcrypt": "^3.0.2",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
     "dotenv": "^6.2.0",
