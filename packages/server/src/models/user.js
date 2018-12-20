@@ -1,5 +1,5 @@
 /* eslint-disable no-return-await */
-import bcpypt from 'bcrypt'
+import bcrypt from 'bcrypt'
 
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
@@ -57,11 +57,11 @@ const user = (sequelize, DataTypes) => {
 
   User.prototype.generatePasswordHash = async function () {
     const saltRounds = 10
-    return await bcpypt.hash(this.password, saltRounds)
+    return await bcrypt.hash(this.password, saltRounds)
   }
 
   User.prototype.validatePassword = async function (password) {
-    return await bcpypt.compare(password, this.password)
+    return await bcrypt.compare(password, this.password)
   }
 
   return User
