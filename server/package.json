@@ -1,14 +1,11 @@
 {
-  "name": "@bunker-42/server",
+  "name": "bunker-42-server",
   "description": "Bunker-42 Server",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Evgenii Yakobenko <dillas90@gmail.com>",
   "license": "MIT",
   "private": true,
-  "engines": { 
-    "node": "11.2.0",
-    "npm": "6.4.1"
-  },
+  "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "test-server": "cross-env TEST_DATABASE=bunker42testdb yarn start",
@@ -17,7 +14,7 @@
   "dependencies": {
     "apollo-server": "^2.2.6",
     "apollo-server-express": "^2.3.1",
-    "bcrypt": "^3.0.2",
+    "bcrypt": "^3.0.3",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
     "dotenv": "^6.2.0",
