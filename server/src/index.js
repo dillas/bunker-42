@@ -72,7 +72,7 @@ const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 
 const isTest = !!process.env.TEST_DATABASE
-const isProduction = !!process.env.DATABASE_URL;
+const isProduction = !!process.env.DATABASE_URL
 const port = process.env.PORT || 8000
 
 sequelize.sync({ force: isTest || isProduction }).then(async () => {
@@ -95,47 +95,6 @@ const createUsersWithMessages = async date => {
       messages: [
         {
           text: 'Published the Road to learn React',
-          createdAt: date.setSeconds(date.getSeconds() + 1),
-        },
-      ],
-    },
-    {
-      include: [models.Message],
-    },
-  );
-
-  await models.User.create(
-    {
-      username: 'ddavids',
-      email: 'hello@david.com',
-      password: 'ddavids',
-      messages: [
-        {
-          text: 'Happy to release ...',
-          createdAt: date.setSeconds(date.getSeconds() + 1),
-        },
-        {
-          text: 'Published a complete ...',
-          createdAt: date.setSeconds(date.getSeconds() + 1),
-        },
-      ],
-    },
-    {
-      include: [models.Message],
-    },
-  );
-};
-
-const aaacreateUsersWithMessages = async date => {
-  await models.User.create(
-    {
-      username: 'rwieruch',
-      email: 'hello@robin.com',
-      password: 'rwieruch',
-      role: 'ADMIN',
-      messages: [
-        {
-          text: 'Published the Road to learn React',
           createdAt: date.setSeconds(date.getSeconds() + 1)
         }
       ]
@@ -157,27 +116,6 @@ const aaacreateUsersWithMessages = async date => {
         },
         {
           text: 'Published a complete ...',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        }
-      ]
-    },
-    {
-      include: [models.Message]
-    }
-  )
-
-  await models.User.create(
-    {
-      username: 'dillas',
-      email: 'dillas90@gmail.com',
-      password: 'huikt0uznaet',
-      messages: [
-        {
-          text: 'Since you already have seed data in your src/index.js file for two users, you can give one of them a role.',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        },
-        {
-          text: 'The admin role used in this case will be checked if the user attempts a delete operation:',
           createdAt: date.setSeconds(date.getSeconds() + 1)
         }
       ]
