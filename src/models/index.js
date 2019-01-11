@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import SiteCategory from './siteCategory'
 
 let sequelize
 if (process.env.DATABASE_URL) {
@@ -18,7 +19,9 @@ if (process.env.DATABASE_URL) {
 
 const models = {
   User: sequelize.import('./user'),
-  Message: sequelize.import('./message')
+  Post: sequelize.import('./post'),
+  Message: sequelize.import('./message'),
+  SiteCategory
 }
 
 Object.keys(models).forEach(key => {

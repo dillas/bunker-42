@@ -79,7 +79,7 @@ const port = process.env.PORT || 8000
 
 sequelize.sync({ force: isTest || isProduction }).then(async () => {
   if (isTest) {
-    createUsersWithMessages(new Date())
+    createFixtureData(new Date())
   }
 
   httpServer.listen({ port }, () => {
@@ -87,7 +87,7 @@ sequelize.sync({ force: isTest || isProduction }).then(async () => {
   })
 })
 
-const createUsersWithMessages = async date => {
+const createFixtureData = async date => {
   await models.User.create(
     {
       username: 'rwieruch',
@@ -124,6 +124,28 @@ const createUsersWithMessages = async date => {
     },
     {
       include: [models.Message]
+    }
+  )
+
+  await models.Post.create(
+    {
+      title: 'День Хиросимы',
+      isActive: false,
+      sortNumber: 500,
+      body: 'Ведь именно в этот день ровно 70 лет назад произошла страшная катастрофа – атомная бомбардировка японского города Хиросима.',
+      previewPicture: 'http://bunker42.com/upload/iblock/6a8/6a89a766fd20db124a82fbc6f62822a0.jpg',
+      userId: '1'
+    }
+  )
+
+  await models.Post.create(
+    {
+      title: 'Новая экспозиция',
+      isActive: false,
+      sortNumber: 500,
+      body: 'Ежегодно 6 августа во всем мире проходят акции в поддержку уничтожения всех видов ядерного оружия.',
+      previewPicture: 'http://bunker42.com/upload/iblock/1aa/1aa366177944eada7d88f87bde8d0623.jpg',
+      userId: '1'
     }
   )
 }
