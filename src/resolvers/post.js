@@ -28,6 +28,36 @@ export default {
 
       const hasNextPage = posts.length > limit
       const edges = hasNextPage ? posts.slice(0, -1) : posts
+      console.log(` ===== edges =====${edges}`)
+      
+      return {
+        edges,
+        pageInfo: {
+          hasNextPage,
+          endCursor: toCursorHash(edges[edges.length - 1].createdAt.toString())
+        }
+      }
+    },
+
+    postsByCategory: async (parent, { cursor, limit = 100 }, { models }) => {
+      const cursorOptions = cursor
+        ? {
+          where: {
+            createdAt: {
+              [Sequelize.Op.lt]: fromCursorHash(cursor)
+            }
+          }
+        }
+        : {}
+
+      const posts = await models.Post.findAll({
+        order: [['createdAt', 'DESC']],
+        limit: limit + 1,
+        ...cursorOptions
+      })
+
+      const hasNextPage = posts.length > limit
+      const edges = hasNextPage ? posts.slice(0, -1) : posts
 
       return {
         edges,
@@ -71,6 +101,9 @@ export default {
   Post: {
     user: async (post, args, { loaders }) => {
       return await loaders.user.load(post.userId)
+    },
+    category: async (post, args, { models }) => {
+      return await models.SiteCategory.find(item => item.id === post.category)
     }
   }
 }

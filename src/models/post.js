@@ -12,16 +12,20 @@ const post = (sequelize, DataTypes) => {
       allowNull: false
     },
     category: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     sortNumber: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     body: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     previewPicture: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     }
   })
 

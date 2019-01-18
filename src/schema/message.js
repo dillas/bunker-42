@@ -21,10 +21,10 @@ export default gql`
 
     type MessageConnection {
         edges: [Message!]!
-        pageInfo: PageInfo!
+        pageInfo: MessagePageInfo!
     }
 
-    type PageInfo {
+    type MessagePageInfo {
         hasNextPage: Boolean!
         endCursor: String!
     }
